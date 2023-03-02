@@ -1,7 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import theme from '../style/theme.style';
+<<<<<<< HEAD
 export default function SearchListItem({stock}) {
+=======
+
+export default function SearchListItem({stock}) {
+
+>>>>>>> StocksApp2/main
     return (
         <View style={styles.listItemContainer}>
             <Text style={styles.symbolText}>

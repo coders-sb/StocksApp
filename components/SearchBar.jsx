@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -5,6 +6,16 @@ import theme from '../style/theme.style';
 
 export default function SearchBar({searchText, handleChangeSearchText}) {
 
+=======
+import React,{useContext} from 'react';
+import {View, TextInput, StyleSheet} from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import theme from '../style/theme.style';
+import { StockContext } from '../App';
+
+export default function SearchBar() {
+    const context = useContext(StockContext)
+>>>>>>> StocksApp2/main
     return (
         <View style={styles.searchBarContainer}>
             <Ionicons 
@@ -14,8 +25,13 @@ export default function SearchBar({searchText, handleChangeSearchText}) {
             />
             <TextInput
                 style={styles.searchBarText}
+<<<<<<< HEAD
                 value={searchText}
                 onChangeText={(text) => handleChangeSearchText(text)}
+=======
+                value={context.searchText}
+                onChangeText={(text) => context.handleChangeSearchText(text)}
+>>>>>>> StocksApp2/main
                 placeholder='Search'
                 placeholderTextColor={theme.TEXT_COLOR}
             />

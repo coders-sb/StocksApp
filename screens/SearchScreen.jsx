@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import SearchBar from '../components/SearchBar';
@@ -34,6 +35,19 @@ export default function SearchScreen() {
             <SearchBar searchText={state.searchText} handleChangeSearchText={(text) => handleChangeSearchText(text)}/>
             <SearchList filteredStocks={state.filteredStocks} handleOnPress={(data) => handleOnPress(data)}/>
             <StockData stockData={state.stockData}/>
+=======
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import SearchBar from '../components/SearchBar';
+import SearchList from '../components/SearchList';
+import theme from '../style/theme.style';
+
+export default function SearchScreen() {
+    return (
+        <View style={styles.container}>
+            <SearchBar />
+            <SearchList />
+>>>>>>> StocksApp2/main
         </View>
     )
 }
