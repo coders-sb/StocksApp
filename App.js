@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import LoginScreen from './screens/LoginScreen'
@@ -45,6 +45,7 @@ export default function App() {
         selectedStocks: [...state.selectedStocks, text]
       })
       )
+      const docRef = addDoc(collection(db, "stocks"), text);
     }
   }
 
