@@ -1,21 +1,36 @@
-import React, { useState} from 'react';
 import 'react-native-gesture-handler';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import {createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import sample_data from './sample/sample_data';
+import React, { useEffect, useState } from 'react'
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import LoginScreen from './screens/LoginScreen'
+import HomeScreen from './screens/HomeScreen'
+import RegistrationScreen from './screens/RegistrationScreen'
+import {decode, encode} from 'base-64'
+if (!global.btoa) {  global.btoa = encode }
+if (!global.atob) { global.atob = decode }
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import sample_data from './sample/sample_data.js';
 
-import WatchListScreen from './screens/WatchListScreen'
-import SearchScreen from './screens/SearchScreen';
-
-const searchName = 'Search';
-const watchName = 'Watch'
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export const StockContext = React.createContext();
+const firebaseConfig = {
+  apiKey: "AIzaSyBSxVP2Tu1SAt7eOCc34QRp7bnBDZRdEOM",
+  authDomain: "coderssb-stocksapp.firebaseapp.com",
+  projectId: "coderssb-stocksapp",
+  storageBucket: "coderssb-stocksapp.appspot.com",
+  messagingSenderId: "365453688644",
+  appId: "1:365453688644:web:ab0ead9510f5cb2f40e111",
+  measurementId: "G-V3T0GQDYBQ"
+};
 
 export default function App() {
+  
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app)
+  console.log("h33");
   const initialState = {
     searchText: "",
     filteredStocks: [],
@@ -41,64 +56,22 @@ export default function App() {
         searchText: text,
         filteredStocks: stocksFiltered
     }))
-  }
-  const contextSetters = {
+}
+const contextSetters = {
     setSelectedStock,
     handleChangeSearchText
-  }
+}
   return (
-    <StockContext.Provider value={{...state, ...contextSetters}}>
-    <SafeAreaView style={styles.container}>
     <NavigationContainer>
-      <Tab.Navigator 
-      initialRouteName='searchName'
-      screenOptions={({ route }) => ({
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70},
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
-            if (rn === searchName) {
-              iconName = focused ? 'search' : 'search-outline';
-
-            } else if (rn === watchName) {
-              iconName = focused ? 'trending-up' : 'trending-up-outline';
-
-            } 
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-        })}
-      >
-        <Tab.Screen name={searchName} component={SearchScreen} />
-        <Tab.Screen name={watchName} component={WatchListScreen} />
-      </Tab.Navigator>
+      <StockContext.Provider value={{...state, ...contextSetters}}>
+      <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="Home" component = {HomeScreen} />
+      </Stack.Navigator>
+      </StockContext.Provider>
     </NavigationContainer>
-    </SafeAreaView>
-    </StockContext.Provider>
   );
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  viewVisible: {
-    borderWidth: 1,
-    borderStyle: "dotted",
-    width: 50,
-    height: 50
-  },
-  scrollViewContainer: {
-    height: 50,
-    borderWidth: 1
-  },
-  textInput: {
-    borderWidth: 1
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50
-  }
-});
