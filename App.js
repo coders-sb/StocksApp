@@ -34,7 +34,8 @@ export default function App() {
   const initialState = {
     searchText: "",
     filteredStocks: [],
-    selectedStocks: []  
+    selectedStocks: [],
+    currentStock: "",
   }
   const [state, setState] = useState(initialState);
 
@@ -49,6 +50,13 @@ export default function App() {
     }
   }
 
+  function setStockData(stock) {
+    setState((prev) => ({
+      ...prev,
+      currentStock: stock
+    }))
+  }
+
   function handleChangeSearchText(text){
     const stockList = sample_data.stocks;
     const stocksFiltered = stockList.filter((stock) => (stock.name.toLowerCase().includes(text.toLowerCase()) || stock.symbol.toLowerCase().includes(text.toLowerCase())));
@@ -60,6 +68,7 @@ export default function App() {
 }
 const contextSetters = {
     setSelectedStock,
+    setStockData,
     handleChangeSearchText
 }
   return (
