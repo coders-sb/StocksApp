@@ -6,6 +6,7 @@ import { StockContext } from '../App';
 
 export default function SearchBar() {
     const context = useContext(StockContext)
+ 
     return (
         <View style={styles.searchBarContainer}>
             <Ionicons 
