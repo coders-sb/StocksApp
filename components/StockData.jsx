@@ -1,8 +1,27 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import theme from '../style/theme.style';
+import { StockContext } from '../App';
+import Axios from 'axios';
 
-export default function StockData({stockData}) {
+export default function StockData() {
+    const [stockData, setStockData] = useState({});
+
+    const context = useContext(StockContext);
+
+    const getData = async (symbol) => {
+        console.log(symbol);
+        const API_KEY = "cfvesu1r01qtdvl3o0b0cfvesu1r01qtdvl3o0bg";
+        const url = "https://finnhub.io/api/v1/quote?symbol=" + symbol + "&token=" + API_KEY;
+        const result = await Axios.get(url);
+        result.data["symbol"] = symbol;
+        setStockData(result.data);
+    }
+    
+    useEffect(() => {
+        getData(context.currentStock);
+    }, [context.currentStock])
+
     return (
         <View style={[styles.stockData]}>
             <Text style={{

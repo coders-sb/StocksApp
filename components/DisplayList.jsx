@@ -9,12 +9,13 @@ export default function SearchList() {
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.contentContainer}>
                 {context.selectedStocks.length > 0 ? (context.selectedStocks.map((stock) => 
-                    <TouchableOpacity key={stock.symbol} >
+                    <TouchableOpacity key={stock.symbol} onPress={() => {
+                        context.setStockData(stock.symbol);
+                    }}>
                         <SearchListItem stock={stock} />
                     </TouchableOpacity>
                 )) : (<Text styles = {styles2}>No stocks have been selected</Text>)
                 }
-
             </ScrollView>
         </View>
     )

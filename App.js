@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import SearchScreen from './screens/SearchScreen';
-
-export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      <SearchScreen/>
-    </SafeAreaView>
-=======
 import React, { useState} from 'react';
 import 'react-native-gesture-handler';
 import { StyleSheet, SafeAreaView } from 'react-native';
@@ -30,7 +19,8 @@ export default function App() {
   const initialState = {
     searchText: "",
     filteredStocks: [],
-    selectedStocks: []  
+    selectedStocks: [],
+    currentStock: "",
   }
   const [state, setState] = useState(initialState);
 
@@ -44,6 +34,13 @@ export default function App() {
     }
   }
 
+  function setStockData(stock) {
+    setState((prev) => ({
+      ...prev,
+      currentStock: stock
+    }))
+  }
+
   function handleChangeSearchText(text){
     const stockList = sample_data.stocks;
     const stocksFiltered = stockList.filter((stock) => (stock.name.toLowerCase().includes(text.toLowerCase()) || stock.symbol.toLowerCase().includes(text.toLowerCase())));
@@ -55,6 +52,7 @@ export default function App() {
   }
   const contextSetters = {
     setSelectedStock,
+    setStockData,
     handleChangeSearchText
   }
   return (
@@ -88,7 +86,6 @@ export default function App() {
     </NavigationContainer>
     </SafeAreaView>
     </StockContext.Provider>
->>>>>>> StocksApp2/main
   );
 }
 
